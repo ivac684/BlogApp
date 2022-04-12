@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>List Posts</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+
+    <script
+  		src="http://code.jquery.com/jquery-3.3.1.min.js"
+  		integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  		crossorigin="anonymous"></script>
+  	<link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+  	<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js" ></script>
+</head>
+<body>
+<div class="container">
+   
+    <div>
+        <h1>List of Posts</h1>
+    </div>
+     
+    <div>
+        <table class="table table-fluid" id="myTable">
+            <thead>
+                <tr>
+                    <th>Posted by</th>
+                    <th>Title</th>
+                    <th>Body</th>
+                    <th>Delete</th>
+<!--                     <th>Update</th> -->
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="post: ${listPosts}">
+					<td th:utext="${post.author.username}"></td>
+                    <td th:utext="${post.title}"></td>
+                    <td th:utext="${post.body}"></td>
+                    <td ><a th:href="@{/posts/delete(id=${post.id})}"> Delete Post</a></td>      
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+        <a th:href="@{/}">[Go Home]</a>
+<script th:src="@{/assets/summernote/summernote-bs4.js}"></script>
+        <script>
+		    $(document).ready( function () {
+		    $('#myTable').DataTable();
+		} );
+		$('.textEditor').summernote({
+			 lang: 'en-EN',
+			 dialogsInBody: true,
+			 height: 120,
+			 minHeight: null, 
+			 maxHeight: null, 
+			 shortCuts: false,
+			 fontSize: 14,
+			 disableDragAndDrop: false,
+			 toolbar: [
+			 ['style', ['bold', 'italic', 'underline', 'clear']],
+			 ['font', ['strikethrough', 'superscript', 'subscript']],
+			 ['fontsize', ['fontsize']],
+			 ['color', ['color']],
+			 ['para', ['ul', 'ol', 'paragraph']],
+			 ['height', ['height']],
+			 ['Insert', ['picture']],
+			 ['Other', ['fullscreen', 'codeview']]
+			 ],
+			 callbacks: {
+			 onImageUpload: function(image) {
+			 editor = $(this);
+			 uploadImageContent(image[0], editor);
+			 }
+			 }
+			 });
+    </script>
+</body>
+</html>

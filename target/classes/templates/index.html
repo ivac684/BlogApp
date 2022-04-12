@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" th:href="@{/css/style.css}"/>
+<script th:src="@{/js/script.js}"></script>
+<head>
+    <meta charset="UTF-8" />
+    <title>inBetween</title>
+</head>
+<body>
+<header>
+<h1>Warm welcome to inBetween!</h1>
+    Now is: <b th:text="${execInfo.now.time}"></b>
+        <a th:href="@{/}">Home</a>
+		<a th:href="@{/users/register}">Register</a>
+		<a th:href="@{/login}">Login</a>
+		<a th:href="@{/posts/create}">Create Post</a>
+		<a th:href="@{/users/list}">Users</a>
+		<a th:href="@{/posts/list}" >Posts</a>
+		<form th:action="@{/logout}" method="post">
+	 	<input type="submit" class="btn bt-info" value="Logout" /></form>
+     <main id="posts">
+     <article th:each="p : ${latest3posts}">
+      <h2 class="title" th:text="${p.title}"></h2>
+      <p class="content" th:utext="${p.body}"></p>
+       <div class="date">
+       Posted on:<p class="date" th:text="${p.date}"></p>
+       By <p class="content" th:utext="${p.author.username}"></p>
+      </div>
+    </article>
+	</main>
+	</header>
+</body>
+
+</html>
